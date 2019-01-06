@@ -1,7 +1,9 @@
 require('dotenv').config()
 const { search } = require('./search')
 
-module.exports.handler = async function handle(event) {
+module.exports.handler = handle
+
+async function handle(event, search = search) {
   const [[_, text]] = event.body.split('&')
     .map(pair => pair.split('='))
     .filter(([k]) => k === 'text')
@@ -10,19 +12,23 @@ module.exports.handler = async function handle(event) {
   const match = await search(query)
 
   if (!match) {
-    return getErrorMessage(query)
+    return wrapResponse(getErrorMessage(query))
   }
 
-  return getResponse(query, match)
+  return wrapResponse(getResponse(query, match))
+}
+
+function wrapResponse(body) {
+  return {
+    statusCode: 200,
+    body: JSON.stringify(body)
+  }
 }
 
 function getErrorMessage(query) {
   return {
-    statusCode: 200,
-    body: JSON.stringify({
-      response_type: 'in_channel',
-      text: `Couldn't find a movie called "${query}" :shrug:`
-    })
+    response_type: 'in_channel',
+    text: `Couldn't find a movie called "${query}" :shrug:`
   }
 }
 
@@ -39,13 +45,10 @@ function getResponse(query, match) {
   ]
 
   return {
-    statusCode: 200,
-    body: JSON.stringify({
-      response_type: 'in_channel',
-      text: lines.join('\n'),
-      attachments: [
-        { image_url: poster }
-      ]
-    })
+    response_type: 'in_channel',
+    text: lines.join('\n'),
+    attachments: [
+      { image_url: poster }
+    ]
   }
 }

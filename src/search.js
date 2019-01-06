@@ -5,14 +5,16 @@ const omdbApi = require('omdb-client')
 const omdbSearch = promisify(omdbApi.search)
 const imdbSearch = promisify(imdbApi)
 
-module.exports.search = async function search(query) {
-  const params = {
-    apiKey: process.env.OMDB_API_KEY,
-    query
-  }
+module.exports.search = search
 
+async function search(
+  query,
+  apiKey = process.env.OMDB_API_KEY,
+  omdbSearch = omdbSearch,
+  imdbSearch = imdbSearch
+) {
   try {
-    const { Search: search } = await omdbSearch(params)
+    const { Search: search } = await omdbSearch({ apiKey, query })
     if (search.length === 0) {
       return null
     }
