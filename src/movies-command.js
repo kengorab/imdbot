@@ -2,17 +2,18 @@ require('dotenv').config()
 const { search } = require('./search')
 
 module.exports.handler = async function handle(event) {
-  const [[_, query]] = event.body.split('&')
+  const [[_, text]] = event.body.split('&')
     .map(pair => pair.split('='))
     .filter(([k]) => k === 'text')
+  const query = decodeURIComponent(text)
 
-  const match = await search(decodeURIComponent(query))
+  const match = await search(query)
 
   if (!match) {
     return getErrorMessage(query)
   }
 
-  return getResponse(match)
+  return getResponse(query, match)
 }
 
 function getErrorMessage(query) {
@@ -25,7 +26,7 @@ function getErrorMessage(query) {
   }
 }
 
-function getResponse(match) {
+function getResponse(query, match) {
   const { id, title, year, contentRating, runtime, description, genre, rating, metascore, poster } = match
   const lines = [
     `*${title}*`,
@@ -33,7 +34,8 @@ function getResponse(match) {
     `*Genre${genre.length === 0 ? '' : 's'}*: ${genre}`,
     `*Year*: ${year} *Rated*: ${contentRating} *Runtime*: ${runtime}`,
     `*Rating*: ${rating} *Metascore*: ${metascore}`,
-    `https://www.imdb.com/title/${id}`
+    `*IMDb Link*: https://www.imdb.com/title/${id}`,
+    `Not what you intended? See all results: https://www.imdb.com/find?q=${encodeURIComponent(query)}#tt`
   ]
 
   return {
