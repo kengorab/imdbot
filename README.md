@@ -5,7 +5,7 @@ A Slack bot that displays movie information from IMDb
 
 ## Screenshot
 After entering `/movie inception`:
-![Inception](https://octodex.github.com/images/yaktocat.png)
+![Inception](https://github.com/kengorab/imdbot/blob/master/screenshots/inception-screenshot.png)
 
 ## Disclaimers
 I don't own the rights to IMDb, or any of the content on the site, or anything like that
