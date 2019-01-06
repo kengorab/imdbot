@@ -6,8 +6,14 @@ provider:
 
 functions:
   imdbot-movies-command:
-    handler: src/index.handler
+    handler: src/movies-command.handler
     events:
     - http:
         path: movies
         method: post
+  imdbot-oauth-verifier:
+    handler: src/oauth-verifier.handler
+    events:
+    - http:
+        path: oauth
+        method: get
