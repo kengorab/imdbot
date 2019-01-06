@@ -1,0 +1,13 @@
+service: imdbot
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+
+functions:
+  imdbot-movies-command:
+    handler: src/index.handler
+    events:
+    - http:
+        path: movies
+        method: post

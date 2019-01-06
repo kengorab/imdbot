@@ -1,0 +1,23 @@
+{
+  "name": "imdbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "deploy:dev": "serverless deploy",
+    "deploy:prod": "serverless deploy --stage prod"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "imdb": "^1.1.0",
+    "omdb-client": "^2.0.0"
+  },
+  "devDependencies": {
+    "serverless": "^1.35.1"
+  }
+}
