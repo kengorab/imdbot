@@ -3,12 +3,10 @@ require('isomorphic-fetch')
 
 module.exports.handler = handle
 
-async function handle(
-  event,
-  clientId = process.env.CLIENT_ID,
-  clientSecret = process.env.CLIENT_SECRET,
-  fetch = fetch
-) {
+const clientId = process.env.CLIENT_ID
+const clientSecret = process.env.CLIENT_SECRET
+
+async function handle(event) {
   const { code } = event.queryStringParameters
 
   const url = 'https://slack.com/api/oauth.access'

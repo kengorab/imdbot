@@ -3,7 +3,7 @@ const { search } = require('./search')
 
 module.exports.handler = handle
 
-async function handle(event, search = search) {
+async function handle(event) {
   const [[_, text]] = event.body.split('&')
     .map(pair => pair.split('='))
     .filter(([k]) => k === 'text')
