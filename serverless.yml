@@ -1,8 +1,11 @@
 service: imdbot
 
+plugins:
+  - serverless-prune-plugin
+
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: nodejs10.x
 
 functions:
   imdbot-movies-command:
@@ -17,3 +20,9 @@ functions:
     - http:
         path: oauth
         method: get
+
+custom:
+  prune:
+    automatic: true
+    includeLayers: true
+    number: 1

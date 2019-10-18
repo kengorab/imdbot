@@ -11,12 +11,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^6.2.0",
+    "dotenv": "^8.2.0",
     "imdb": "^1.1.0",
     "isomorphic-fetch": "^2.2.1",
     "omdb-client": "^2.0.0"
   },
   "devDependencies": {
-    "serverless": "^1.35.1"
+    "serverless": "^1.54.0",
+    "serverless-prune-plugin": "^1.4.1"
   }
 }
